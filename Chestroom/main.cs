@@ -299,6 +299,7 @@ namespace CHESTROOM
                         {
                             var configString = sr.ReadToEnd();
                             config = JsonConvert.DeserializeObject<Config>(configString);
+                            config.ChestsPerRow = config.ChestsPerRow < 1 ? 1 : Math.Min(NumberOfChests, config.ChestsPerRow);
                         }
                         stream.Close();
                     }
