@@ -157,7 +157,7 @@ namespace CHESTROOM
             }
             if (count > (1000 - NumberOfChests))
             {
-                args.Player.SendInfoMessage("Making this chestroom would exceed the chest limit, chestroom cancelled.");
+                args.Player.SendInfoMessage("Creating this chestroom would exceed the chest limit, chestroom cancelled.");
                 return;
             }
             bool first = true;
