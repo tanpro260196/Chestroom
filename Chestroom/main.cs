@@ -27,7 +27,7 @@ namespace CHESTROOM
 
         static int MaxItems { get { return Main.maxItemTypes + 47; } }
         static int NumberOfChests { get { return (int)Math.Ceiling((decimal)MaxItems / 40);} }
-        static int ChestsPerRow { get { return config.CustomRoom ? config.ChestsPerRow : (int)Math.Ceiling(Math.Sqrt(NumberOfChests));} }
+        static int ChestsPerRow { get { return config.ChestsPerRow; } }
         static int Rows { get { return(int)Math.Ceiling((decimal)NumberOfChests / ChestsPerRow);} }
         static int Width { get { return 4 * ChestsPerRow + 2;} }
         static int Height { get { return Rows * 5 + 1; } }
@@ -277,8 +277,8 @@ namespace CHESTROOM
 
         public class Config
         {
+            public int ChestsPerRow = (int)Math.Ceiling(Math.Sqrt(NumberOfChests));
             public bool CustomRoom;
-            public int ChestsPerRow = 7;
             public byte TileId = 38;
             public short ChestId = 1;
             public byte BgWall = 4;
@@ -299,7 +299,7 @@ namespace CHESTROOM
                         {
                             var configString = sr.ReadToEnd();
                             config = JsonConvert.DeserializeObject<Config>(configString);
-                            config.ChestsPerRow = config.ChestsPerRow < 1 ? 1 : Math.Min(NumberOfChests, config.ChestsPerRow);
+                            config.ChestsPerRow = config.ChestsPerRow < 2 ? 2 : Math.Min(NumberOfChests, config.ChestsPerRow);
                         }
                         stream.Close();
                     }
