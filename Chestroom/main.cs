@@ -26,10 +26,10 @@ namespace CHESTROOM
         static short[] chests = new short[] { 1, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 };
 
         static int MaxItems { get { return Main.maxItemTypes + 47; } }
-        static int NumberOfChests { get { return (int)Math.Ceiling((decimal)MaxItems / 40);} }
+        static int NumberOfChests { get { return (int)Math.Ceiling((decimal)MaxItems / 40); } }
         static int ChestsPerRow { get { return config.ChestsPerRow; } }
-        static int Rows { get { return(int)Math.Ceiling((decimal)NumberOfChests / ChestsPerRow);} }
-        static int Width { get { return 4 * ChestsPerRow + 2;} }
+        static int Rows { get { return (int)Math.Ceiling((decimal)NumberOfChests / ChestsPerRow); } }
+        static int Width { get { return 4 * ChestsPerRow + 2; } }
         static int Height { get { return Rows * 5 + 1; } }
 
         Random rnd = new Random();
@@ -234,7 +234,7 @@ namespace CHESTROOM
             }
             informplayers();
             sw.Stop();
-            args.Player.SendInfoMessage(string.Format("Chestroom created in {0} seconds. ({1} items in {2} chests)", sw.Elapsed.TotalSeconds, MaxItems, NumberOfChests));
+            args.Player.SendInfoMessage(string.Format("Chestroom created in {0} seconds. ({1} items in {2} chests)", sw.Elapsed.TotalSeconds, MaxItems, NumberOfChests - 1));
         }
 
         public void ConvRefillChests(int s, int e)
@@ -282,8 +282,8 @@ namespace CHESTROOM
             public byte TileId = 38;
             public short ChestId = 1;
             public byte BgWall = 4;
-            public short pFrameY =18;
-            public short tFrameY =22;
+            public short pFrameY = 18;
+            public short tFrameY = 22;
         }
 
         static bool ReadConfig()
