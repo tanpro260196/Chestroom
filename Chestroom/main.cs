@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace CHESTROOM
 {
-    [ApiVersion(1, 16)]
+    [ApiVersion(1, 17)]
     public class Chestroom : TerrariaPlugin
     {
         public static Config config = new Config();
