@@ -234,7 +234,7 @@ namespace CHESTROOM
             }
             informplayers();
             sw.Stop();
-            args.Player.SendInfoMessage(string.Format("Chestroom created in {0} seconds. ({1} items in {2} chests)", sw.Elapsed.TotalSeconds, MaxItems, NumberOfChests - 1));
+            args.Player.SendInfoMessage(string.Format("Chestroom created in {0} seconds. ({1} items in {2} chests)", sw.Elapsed.TotalSeconds, MaxItems, NumberOfChests));
         }
 
         public void ConvRefillChests(int s, int e)
