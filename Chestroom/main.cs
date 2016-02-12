@@ -1,14 +1,14 @@
-﻿using System;
-using Terraria;
-using TShockAPI;
-using TerrariaApi.Server;
-using System.Reflection;
-using System.IO;
-using System.Data;
-using Mono.Data.Sqlite;
+﻿using Mono.Data.Sqlite;
 using MySql.Data.MySqlClient;
-using System.Diagnostics;
 using Newtonsoft.Json;
+using System;
+using System.Data;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using Terraria;
+using TerrariaApi.Server;
+using TShockAPI;
 
 namespace ChestroomPlugin
 {
@@ -19,25 +19,11 @@ namespace ChestroomPlugin
         public static IDbConnection Database;
         public static bool usinginfchests;
 
-        public override Version Version
-        {
-            get { return Assembly.GetExecutingAssembly().GetName().Version; }
-        }
-
-        public override string Author
-        {
-            get { return "Ancientgods"; }
-        }
-
-        public override string Name
-        {
-            get { return "Chestroom"; }
-        }
-
-        public override string Description
-        {
-            get { return "Generates a chestroom containing all items"; }
-        }
+        public override Version Version => Assembly.GetExecutingAssembly().GetName().Version; 
+        public override string Author => "Ancientgods";       
+        public override string Name => "Chestroom";       
+        public override string Description => "Generates a chestroom containing all items"; 
+        
 
         public override void Initialize()
         {
@@ -78,8 +64,7 @@ namespace ChestroomPlugin
             base.Dispose(disposing);
         }
 
-        public main(Main game)
-            : base(game)
+        public main(Main game): base(game)
         {
             Order = 1;
         }
@@ -178,7 +163,6 @@ namespace ChestroomPlugin
             {
                 TShock.Log.ConsoleError(ex.Message);
             }
-
             return false;
         }
 

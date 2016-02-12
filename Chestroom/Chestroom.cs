@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using TerrariaApi.Server;
 using TShockAPI;
-
 
 namespace ChestroomPlugin
 {
-
     public class Chestroom
     {
         static Random rnd = new Random();
@@ -21,14 +14,13 @@ namespace ChestroomPlugin
         static byte[] walls = new byte[] { 4, 5, 6, 7, 9, 10, 11, 12, 19, 21, 22, 23, 24, 25, 26, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 41, 42, 43, 45, 46, 47, 72, 73, 74, 75, 76, 78, 82, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 109, 110, 113, 114, 115 };
         static short[] chests = new short[] { 1, 3, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 };
 
-        public static int MaxItems { get { return Main.maxItemTypes + 47; } }
-        public static int ActualMaxItems { get { return MaxItems - ExcludedItems.Length; } }
-        public static int MaxChests { get { return (int)Math.Ceiling((decimal)ActualMaxItems / 40); } }
-       public  static int ChestsPerRow { get { return main.config.ChestsPerRow; } }
-        public static int MaxRows { get { return (int)Math.Ceiling((decimal)MaxChests / ChestsPerRow); } }
-       public  static int RowWidth { get { return 4 * ChestsPerRow + 2; } }
-       public  static int RowHeight { get { return MaxRows * 5 + 1; } }
-
+        public static int MaxItems =>  Main.maxItemTypes + 47;
+        public static int ActualMaxItems => MaxItems - ExcludedItems.Length; 
+        public static int MaxChests => (int)Math.Ceiling((decimal)ActualMaxItems / 40); 
+        public  static int ChestsPerRow => main.config.ChestsPerRow; 
+        public static int MaxRows => (int)Math.Ceiling((decimal)MaxChests / ChestsPerRow);
+        public  static int RowWidth => 4 * ChestsPerRow + 2; 
+        public  static int RowHeight => MaxRows * 5 + 1; 
 
         public byte TileId;
         public short ChestId;

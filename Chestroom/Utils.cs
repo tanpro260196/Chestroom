@@ -1,6 +1,6 @@
-﻿using Terraria;
+﻿using System.Text;
+using Terraria;
 using TShockAPI;
-using System.Text;
 using TShockAPI.DB;
 
 namespace ChestroomPlugin
@@ -29,18 +29,17 @@ namespace ChestroomPlugin
         {
             foreach (TSPlayer ts in TShock.Players)
             {
-                if ((ts != null) && (ts.Active))
+                if (ts == null || !ts.Active)
+                    continue;
+
+                for (int i = 0; i < 255; i++)
                 {
-                    for (int i = 0; i < 255; i++)
+                    for (int j = 0; j < Main.maxSectionsX; j++)
                     {
-                        for (int j = 0; j < Main.maxSectionsX; j++)
-                        {
-                            for (int k = 0; k < Main.maxSectionsY; k++)
-                            {
-                                Netplay.Clients[i].TileSections[j, k] = false;
-                            }
-                        }
+                        for (int k = 0; k < Main.maxSectionsY; k++)
+                            Netplay.Clients[i].TileSections[j, k] = false;
                     }
+
                 }
             }
         }
@@ -49,14 +48,14 @@ namespace ChestroomPlugin
         public static int ExcludedIndex = Chestroom.ExcludedItems.Length - 1;
         public static bool ExcludeItem(int id)
         {
-            if(ExcludedIndex <0)
+            if (ExcludedIndex < 0)
                 ExcludedIndex = Chestroom.ExcludedItems.Length - 1;
 
             if (id == Chestroom.ExcludedItems[ExcludedIndex])
             {
                 ExcludedIndex--;
                 return true;
-            }             
+            }
             return false;
         }
     }
