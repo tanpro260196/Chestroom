@@ -12,7 +12,7 @@ using TShockAPI;
 
 namespace ChestroomPlugin
 {
-    [ApiVersion(1, 22)]
+    [ApiVersion(1, 23)]
     public class main : TerrariaPlugin
     {
         public static Config config = new Config();
