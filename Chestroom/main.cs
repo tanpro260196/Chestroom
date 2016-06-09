@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Terraria;
 using TerrariaApi.Server;
 using TShockAPI;
@@ -114,12 +115,17 @@ namespace ChestroomPlugin
             Chestroom chestRoom = new Chestroom(config.CustomRoom);
             args.Player.SendSuccessMessage("Creating Chestroom...");
 
-            if (chestRoom.Build(args.Player, X + offsetX, Y + offsetY))
-            {
-                sw.Stop();
-                Utils.informplayers();
-                args.Player.SendInfoMessage(string.Format("Chestroom created in {0} seconds. ({1} items in {2} chests)", sw.Elapsed.TotalSeconds, Chestroom.ActualMaxItems, Chestroom.MaxChests));
-            }
+
+            Task.Run(async () => {
+                bool success = await chestRoom.Build(args.Player, X + offsetX, Y + offsetY);
+
+                if(success)
+                {
+                    sw.Stop();
+                    Utils.informplayers();
+                    args.Player.SendInfoMessage(string.Format("Chestroom created in {0} seconds. ({1} items in {2} chests)", sw.Elapsed.TotalSeconds, Chestroom.ActualMaxItems, Chestroom.MaxChests));
+                }
+            });
         }
 
         public class Config

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Terraria;
 using TShockAPI;
 
@@ -38,91 +39,93 @@ namespace ChestroomPlugin
         }
 
 
-        public bool Build(TSPlayer tsPlayer, int X, int Y)
+        public async Task<bool> Build(TSPlayer tsPlayer, int X, int Y)
         {
-            int count = 0;
-            for (int ch = 0; ch < 1000; ch++)
-            {
-                if (Main.chest[ch] != null)
-                    count++;
-            }
-            if (count > (1000 - MaxChests))
-            {
-                tsPlayer.SendInfoMessage("Creating this chestroom would exceed the chest limit, chestroom cancelled.");
-                return false;
-            }
-            bool first = true;
-            int placed = ChestsPerRow * MaxRows;
-            int chestitem = Main.maxItemTypes - 1;
-
-
-            for (int y = RowHeight - 1; y >= 0; y--)
-            {
-                for (int x = RowWidth - 1; x >= 0; x--)
+           return await Task.Run(() => {
+                int count = 0;
+                for (int ch = 0; ch < 1000; ch++)
                 {
-                    if (x > 0 && x < RowWidth - 1 && y > 0 && y < RowHeight - 1)
+                    if (Main.chest[ch] != null)
+                        count++;
+                }
+                if (count > (1000 - MaxChests))
+                {
+                    tsPlayer.SendInfoMessage("Creating this chestroom would exceed the chest limit, chestroom cancelled.");
+                    return false;
+                }
+                bool first = true;
+                int placed = ChestsPerRow * MaxRows;
+                int chestitem = Main.maxItemTypes - 1;
+
+
+                for (int y = RowHeight - 1; y >= 0; y--)
+                {
+                    for (int x = RowWidth - 1; x >= 0; x--)
                     {
-                        Main.tile[x + X, y + Y] = new Tile() { wall = BackWall };
-                    }
-                    if (x == 0 || x == RowWidth - 1 || y == 0 || y == RowHeight - 1)
-                    {
-                        Main.tile[x + X, y + Y] = new Tile() { type = TileId };
-                        Main.tile[x + X, y + Y].active(true);
-                    }
-                    if (y % 5 == 0 && y > 0 && y < RowHeight - 1)
-                    {
-                        Main.tile[x + X, y + Y].active(true);
-                        if ((x % 4 == 2 || x % 4 == 3 || x == 1 || x == RowWidth - 2))
+                        if (x > 0 && x < RowWidth - 1 && y > 0 && y < RowHeight - 1)
                         {
-                            Main.tile[x + X, y + Y].type = TileId;
+                            Main.tile[x + X, y + Y] = new Tile() { wall = BackWall };
                         }
-                        else if ((x % 4 == 0 || x % 4 == 1) && x > 1 && x < RowWidth - 2)
+                        if (x == 0 || x == RowWidth - 1 || y == 0 || y == RowHeight - 1)
                         {
-                            Main.tile[x + X, y + Y].type = (byte)19;
-                            Main.tile[x + X, y + Y].frameY =PlatformFrameY;
+                            Main.tile[x + X, y + Y] = new Tile() { type = TileId };
+                            Main.tile[x + X, y + Y].active(true);
                         }
-                    }
-                    if (y % 5 == 1 && (x == 1 || x == RowWidth - 2))
-                    {
-                        Main.tile[x + X, y + Y].active(true);
-                        Main.tile[x + X, y + Y].type = 4;
-                        Main.tile[x + X, y + Y].frameY = TorchFrameY;
-                    }
-                    if (y % 5 == 2 && x % 4 == 3 && x > 0 && x < RowWidth - 2)
-                    {
-                        placed--;
-                        if (placed < MaxChests)
+                        if (y % 5 == 0 && y > 0 && y < RowHeight - 1)
                         {
-                            WorldGen.AddBuriedChest(x + X, y + Y, 1, false, ChestId);
-                            if (Main.chest[count] != null)
+                            Main.tile[x + X, y + Y].active(true);
+                            if ((x % 4 == 2 || x % 4 == 3 || x == 1 || x == RowWidth - 2))
                             {
-                                for (int i = 39; i >= 0; i--)
-                                {
-                                    while(Utils.ExcludeItem(chestitem))
-                                        chestitem--;
-
-                                    if (chestitem < -48)
-                                        break;
-
-                                    if (first)
-                                    {
-                                        i -= 40 - (ActualMaxItems + 1) % 40;
-                                        first = false;
-                                    }
-                                    Item itm = TShock.Utils.GetItemById(chestitem);
-                                    itm.stack = itm.maxStack;
-                                    Main.chest[count].item[i] = itm;
-                                    chestitem--;
-                                }
+                                Main.tile[x + X, y + Y].type = TileId;
                             }
-                            count++;
+                            else if ((x % 4 == 0 || x % 4 == 1) && x > 1 && x < RowWidth - 2)
+                            {
+                                Main.tile[x + X, y + Y].type = (byte)19;
+                                Main.tile[x + X, y + Y].frameY = PlatformFrameY;
+                            }
+                        }
+                        if (y % 5 == 1 && (x == 1 || x == RowWidth - 2))
+                        {
+                            Main.tile[x + X, y + Y].active(true);
+                            Main.tile[x + X, y + Y].type = 4;
+                            Main.tile[x + X, y + Y].frameY = TorchFrameY;
+                        }
+                        if (y % 5 == 2 && x % 4 == 3 && x > 0 && x < RowWidth - 2)
+                        {
+                            placed--;
+                            if (placed < MaxChests)
+                            {
+                                WorldGen.AddBuriedChest(x + X, y + Y, 1, false, ChestId);
+                                if (Main.chest[count] != null)
+                                {
+                                    for (int i = 39; i >= 0; i--)
+                                    {
+                                        while (Utils.ExcludeItem(chestitem))
+                                            chestitem--;
+
+                                        if (chestitem < -48)
+                                            break;
+
+                                        if (first)
+                                        {
+                                            i -= 40 - (ActualMaxItems + 1) % 40;
+                                            first = false;
+                                        }
+                                        Item itm = TShock.Utils.GetItemById(chestitem);
+                                        itm.stack = itm.maxStack;
+                                        Main.chest[count].item[i] = itm;
+                                        chestitem--;
+                                    }
+                                }
+                                count++;
+                            }
                         }
                     }
                 }
-            }
-            if (main.usinginfchests)
-                Utils.ConvertToAutoRefill(count - MaxChests, MaxChests);
-            return true;
-        }
+                if (main.usinginfchests)
+                    Utils.ConvertToAutoRefill(count - MaxChests, MaxChests);
+                return true;
+            });
+        }           
     }
 }
