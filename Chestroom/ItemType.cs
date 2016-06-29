@@ -11,7 +11,7 @@ namespace ChestroomPlugin
 {
 	public static class ItemType
 	{
-		public static bool IsWeapon(Item i) => (IsMagicWeapon(i) || IsRangedWeapon(i) || IsMeleeWeapon(i)) && !IsTool(i) || IsThrownWeapon(i);
+		public static bool IsWeapon(Item i) => (IsMagicWeapon(i) || IsRangedWeapon(i) || IsMeleeWeapon(i) || IsThrownWeapon(i)) && !IsTool(i) ;
 		public static bool IsRangedWeapon(Item i) => i.ranged && i.shoot > 0;
 		public static bool IsMeleeWeapon(Item i) => i.melee;
 		public static bool IsMagicWeapon(Item i) => i.magic;
@@ -33,15 +33,12 @@ namespace ChestroomPlugin
 
 		public static bool IsVanity(Item i) => i.vanity;
 
-
-
 		public static bool IsAccessory(Item i) => i.accessory && !IsMusicBox(i);
 
 		public static bool IsDye(Item i) => (~i.width & ~i.height) == ~20 && i.maxStack == 99 &&
 			!IsPlaceable(i) && !IsWeapon(i) && !IsTool(i) && !IsMineCart(i) && i.useAnimation == 100;
 
 		public static bool IsAmmo(Item i) => i.ammo > 0 && !IsWeapon(i);
-
 
 		public static bool IsMusicBox(Item i) => i.createTile == 139;
 
@@ -190,20 +187,6 @@ namespace ChestroomPlugin
 				sb.Append("Minecart");
 			}
 			return sb.ToString();
-		}
-
-		static int ExcludedIndex = Chestroom.ExcludedItems.Length - 1;
-		static bool ExcludeItem(int id)
-		{
-			if (ExcludedIndex < 0)
-				ExcludedIndex = Chestroom.ExcludedItems.Length - 1;
-
-			if (id == Chestroom.ExcludedItems[ExcludedIndex])
-			{
-				ExcludedIndex--;
-				return true;
-			}
-			return false;
 		}
 	}
 }
