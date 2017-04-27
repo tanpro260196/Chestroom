@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using TShockAPI;
 
@@ -11,7 +8,7 @@ namespace ChestroomPlugin
 {
 	public static class ItemType
 	{
-		public static bool IsWeapon(Item i) => (IsMagicWeapon(i) || IsRangedWeapon(i) || IsMeleeWeapon(i) || IsThrownWeapon(i)) && !IsTool(i) ;
+		public static bool IsWeapon(Item i) => (IsMagicWeapon(i) || IsRangedWeapon(i) || IsMeleeWeapon(i) || IsThrownWeapon(i)) && !IsTool(i);
 		public static bool IsRangedWeapon(Item i) => i.ranged && i.shoot > 0;
 		public static bool IsMeleeWeapon(Item i) => i.melee;
 		public static bool IsMagicWeapon(Item i) => i.magic;
@@ -71,32 +68,32 @@ namespace ChestroomPlugin
 					}
 					if (Dcount == 0)
 						NoDescription.Add(itm);
-					
+
 
 					if (!string.IsNullOrWhiteSpace(Description))
 						count++;
 					else
 						Description = "~~~~~~~~~[NO DESCRIPTION AVAILABLE] ~~~~~~~~~";
 
-					sw.WriteLine($"{Chestroom.ItemIds[i]} ({itm.name}) - {Description}");
+					sw.WriteLine($"{Chestroom.ItemIds[i]} ({itm.Name}) - {Description}");
 				}
 				sw.WriteLine(new string('-', 30));
 				sw.WriteLine($"{count} items out of {Chestroom.ItemIds.Length} got a type description.");
 				sw.WriteLine($"{MultipleDescriptions} items have multiple descriptions.");
-				
+
 				sw.WriteLine(new string('-', 30));
 				sw.WriteLine($"Multidescription items: {MultiDescription.Count}");
 				for (int i = 0; i < MultiDescription.Count; i++)
 				{
 					int c;
-					sw.WriteLine($"{MultiDescription[i].name} - {GetDescription(MultiDescription[i], out c)}");
+					sw.WriteLine($"{MultiDescription[i].Name} - {GetDescription(MultiDescription[i], out c)}");
 				}
 				sw.WriteLine(new string('-', 30));
 				sw.WriteLine(new string('-', 30));
 				sw.WriteLine($"No description items: {NoDescription.Count}");
 				for (int i = 0; i < NoDescription.Count; i++)
 				{
-					sw.WriteLine($"{NoDescription[i].name}");
+					sw.WriteLine($"{NoDescription[i].Name}");
 				}
 			}
 		}

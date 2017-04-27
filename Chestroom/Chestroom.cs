@@ -17,7 +17,7 @@ namespace ChestroomPlugin
 
 		public static int[] ItemIds { get; } = Enumerable.Range(-48, Main.maxItemTypes + 48).Where(i => !ExcludedItems.Contains(i)).ToArray();
 		public static int MaxChests => (int)Math.Ceiling((decimal)ItemIds.Length / 40);
-		public static int ChestsPerRow => main.config.ChestsPerRow;
+		public static int ChestsPerRow => ChestroomPlugin.config.ChestsPerRow;
 		public static int MaxRows => (int)Math.Ceiling((decimal)MaxChests / ChestsPerRow);
 		public static int RowWidth => 4 * ChestsPerRow + 2;
 		public static int RowHeight => MaxRows * 5 + 1;
@@ -31,11 +31,11 @@ namespace ChestroomPlugin
 		public Chestroom(bool custom)
 		{
 			Random rnd = new Random();
-			TileId = custom ? main.config.TileId : tiles[rnd.Next(0, tiles.Length)];
-			ChestId = custom ? main.config.ChestId : chests[rnd.Next(0, chests.Length)];
-			BackWall = custom ? main.config.BgWall : walls[rnd.Next(0, walls.Length)];
-			PlatformFrameY = custom ? main.config.pFrameY : platformframey[rnd.Next(0, platformframey.Length)];
-			TorchFrameY = custom ? main.config.tFrameY : torchframey[rnd.Next(0, torchframey.Length)];
+			TileId = custom ? ChestroomPlugin.config.TileId : tiles[rnd.Next(0, tiles.Length)];
+			ChestId = custom ? ChestroomPlugin.config.ChestId : chests[rnd.Next(0, chests.Length)];
+			BackWall = custom ? ChestroomPlugin.config.BgWall : walls[rnd.Next(0, walls.Length)];
+			PlatformFrameY = custom ? ChestroomPlugin.config.pFrameY : platformframey[rnd.Next(0, platformframey.Length)];
+			TorchFrameY = custom ? ChestroomPlugin.config.tFrameY : torchframey[rnd.Next(0, torchframey.Length)];
 		}
 
 
@@ -112,7 +112,7 @@ namespace ChestroomPlugin
 						}
 					}
 				}
-				if (main.usinginfchests)
+				if (ChestroomPlugin.usinginfchests)
 					Utils.ConvertToAutoRefill(count - MaxChests, MaxChests);
 				return true;
 			});
