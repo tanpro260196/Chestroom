@@ -1,27 +1,29 @@
-﻿using System.Text;
+﻿using InfChests;
 using Terraria;
 using TShockAPI;
-using TShockAPI.DB;
 
 namespace ChestroomPlugin
 {
 	public static class Utils
 	{
-		public static void ConvertToAutoRefill(int s, int e)
+		public static void ConvertToAutoRefill(int start, int end)
 		{
-			var items = new StringBuilder();
-			for (int i = s; i < s + e; i++)
+			for (int i = start; i < start + end; i++)
 			{
-				Terraria.Chest c = Main.chest[i];
-				if (c != null)
+				Chest c = Main.chest[i];
+
+				if (c == null)
+					continue;
+
+				DB.addChest(new InfChest()
 				{
-					for (int j = 0; j < 40; j++)
-						items.Append(c.item[j].netID).Append(",").Append(c.item[j].stack).Append(",").Append(c.item[j].prefix).Append(",");
-					ChestroomPlugin.Database.Query("INSERT INTO Chests (X, Y, Account, Items, Flags, WorldID) VALUES (@0, @1, '', @2, @3, @4)",
-						c.x, c.y, items.ToString(0, items.Length - 1), 5, Main.worldID);
-					items.Clear();
-					Main.chest[i] = null;
-				}
+					items = c.item,
+					isPublic = true,
+					refillTime = 0,
+					userid = -1,
+					x = c.x,
+					y = c.y,
+				});
 			}
 		}
 
@@ -39,7 +41,6 @@ namespace ChestroomPlugin
 						for (int k = 0; k < Main.maxSectionsY; k++)
 							Netplay.Clients[i].TileSections[j, k] = false;
 					}
-
 				}
 			}
 		}

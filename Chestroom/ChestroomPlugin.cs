@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Mono.Data.Sqlite;
-using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using System;
 using System.Data;
@@ -38,29 +36,10 @@ namespace ChestroomPlugin
 				Console.WriteLine("Done");
 			}, "crdump"));
 
-			if (File.Exists(Path.Combine(Environment.CurrentDirectory, "ServerPlugins\\InfiniteChests.dll")))
-			{
-				switch (TShock.Config.StorageType.ToLower())
-				{
-					case "mysql":
-						string[] host = TShock.Config.MySqlHost.Split(':');
-						Database = new MySqlConnection()
-						{
-							ConnectionString = string.Format("Server={0}; Port={1}; Database={2}; Uid={3}; Pwd={4};",
-									host[0],
-									host.Length == 1 ? "3306" : host[1],
-									TShock.Config.MySqlDbName,
-									TShock.Config.MySqlUsername,
-									TShock.Config.MySqlPassword)
-						};
-						break;
-					case "sqlite":
-						string sql = Path.Combine(TShock.SavePath, "chests.sqlite");
-						Database = new SqliteConnection(string.Format("uri=file://{0},Version=3", sql));
-						break;
-				}
+
+			if (File.Exists(Path.Combine(Environment.CurrentDirectory, "Serverplugins", "InfChests.dll")))
 				usinginfchests = true;
-			}
+
 			ReadConfig();
 		}
 

@@ -38,7 +38,6 @@ namespace ChestroomPlugin
 			TorchFrameY = custom ? ChestroomPlugin.config.tFrameY : torchframey[rnd.Next(0, torchframey.Length)];
 		}
 
-
 		public async Task<bool> Build(TSPlayer tsPlayer, int X, int Y)
 		{
 			return await Task.Run(() =>
