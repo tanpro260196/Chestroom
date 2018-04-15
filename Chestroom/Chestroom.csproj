@@ -33,8 +33,17 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net">
+      <HintPath>Resources\BCrypt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="HttpServer">
+      <HintPath>Resources\HttpServer.dll</HintPath>
+    </Reference>
     <Reference Include="InfChests">
       <HintPath>Resources\InfChests.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Data.Sqlite">
+      <HintPath>Resources\Mono.Data.Sqlite.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data">
       <HintPath>Resources\MySql.Data.dll</HintPath>
